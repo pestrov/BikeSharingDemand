@@ -29,8 +29,24 @@ for dataPoint = 1:dataSetSize
     tempSum(dataPointTemp) = tempSum(dataPointTemp) + count(dataPoint);
     tempEntries(dataPointTemp) = tempEntries(dataPointTemp)+1;
     
+   %Check if registred ride more on weekdays
+    if (workingday(dataPoint) == 1)
+        workingSumRegistered = workingSumRegistered + registered(dataPoint);
+        workingSumCasual = workingSumCasual + casual(dataPoint);
+        workingEntries = workingEntries + 1;
+    else
+        restSumRegistered = restSumRegistered + registered(dataPoint);
+        restSumCasual = restSumCasual + casual(dataPoint);
+        restEntries = restEntries + 1;
+    end
     
 end
+
+restAverageRegister = restSumRegistered/restEntries
+restAverageCasual = restSumCasual/restEntries
+
+workingAverageRegister = workingSumRegistered/workingEntries
+workingAverageCasual = workingSumCasual/workingEntries
 
 hourlyMeans = hourlySum./hourlyEntries;
 weatherMeans = floor(weathersSum./weathersEntries);
