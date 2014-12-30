@@ -32,15 +32,18 @@ for dataPoint = 1:dataSetSize
     
 end
 
-hourlyMeans = floor(hourlySum./hourlyEntries);
-weatherMeans = floor(weathersSum./weathersEntries)
-tempMeans = floor(tempSum./tempEntries)
+hourlyMeans = hourlySum./hourlyEntries;
+weatherMeans = floor(weathersSum./weathersEntries);
+tempMeans = floor(tempSum./tempEntries);
 
 testDataSetSize = size(testDatesData);
 
 answerCount = zeros(testDataSetSize);
 
 for i = 1:testDataSetSize
-    answerCount(i) = hourlyMeans(hourFromDate(testDatesData{i}));
+    answerCount(i) = hourlyMeans(hourFromDate(testDatesData{i}))*tempCoeff*...
+        testatemp(i);
 end
+
+answerCount = floor(answerCount);
 
