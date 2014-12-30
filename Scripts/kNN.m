@@ -6,6 +6,16 @@ testDataSetSize = size(testDatesData);
 
 answerCount = zeros(testDataSetSize);
 
+hour = zeros(dataSetSize);
+for i=1:dataSetSize
+    hour(i)=hourFromDate(datesData{i});
+end
+
+testHour = zeros(testDataSetSize);
+for i=1:testDataSetSize
+    testHour(i)=hourFromDate(testDatesData{i});
+end
+
 tic
 for i=1:testDataSetSize
     kMinRadius = ones(k,1).*100;
@@ -13,7 +23,7 @@ for i=1:testDataSetSize
     
     for j=1:dataSetSize
         
-        if testHours(i) ~= hours(j)
+        if testHour(i) ~= hour(j)
             continue
         end
         
