@@ -4,6 +4,8 @@ hoursInDay = 24;
 hourlySum = zeros(hoursInDay,1);
 hourlyEntries = zeros(hoursInDay,1);
 
+hourlyTempSum = zeros(hoursInDay,1);
+
 weathersSum = zeros(4,1);
 weathersEntries = zeros(4,1);
 
@@ -16,7 +18,10 @@ for dataPoint = 1:dataSetSize
     dataPointHour = hourFromDate(datesData{dataPoint});
     hourlySum(dataPointHour) = hourlySum(dataPointHour) + count(dataPoint);
     hourlyEntries(dataPointHour) = hourlyEntries(dataPointHour)+1;
-    
+
+    %Hourly mean temperature
+    hourlyTempSum(dataPointHour) = hourlyTempSum(dataPointHour) + atemp(dataPoint);
+
     %Seasons
     
     %Weather
@@ -42,23 +47,32 @@ for dataPoint = 1:dataSetSize
     
 end
 
-restAverageRegister = restSumRegistered/restEntries
-restAverageCasual = restSumCasual/restEntries
+restAverageRegister = restSumRegistered/restEntries;
+restAverageCasual = restSumCasual/restEntries;
 
-workingAverageRegister = workingSumRegistered/workingEntries
-workingAverageCasual = workingSumCasual/workingEntries
+workingAverageRegister = workingSumRegistered/workingEntries;
+workingAverageCasual = workingSumCasual/workingEntries;
 
 hourlyMeans = hourlySum./hourlyEntries;
+hourlyTempMeans = hourlyTempSum./hourlyEntries;
 weatherMeans = floor(weathersSum./weathersEntries);
 tempMeans = floor(tempSum./tempEntries);
 
-testDataSetSize = size(testDatesData);
+%Training
+trainParameters;
 
+%Printing the result
+testDataSetSize = size(testDatesData);
 answerCount = zeros(testDataSetSize);
 
+baaadAnswer = 0;
 for i = 1:testDataSetSize
-    answerCount(i) = hourlyMeans(hourFromDate(testDatesData{i}))*tempCoeff*...
-        testatemp(i);
+    hour = hourFromDate(testDatesData{i});
+    answerCount(i) = hourlyMeans(hourFromDate(testDatesData{i})) + tempCoeff*...
+        (testatemp(i)-hourlyTempMeans(hour));
+    if answerCount(i) < 0
+        answerCount(i) = 0  ;
+    end
 end
 
 answerCount = floor(answerCount);

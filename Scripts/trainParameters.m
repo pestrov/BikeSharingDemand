@@ -4,10 +4,10 @@ C = zeros(dataSetSize);
 d = zeros(dataSetSize);
 
 for dataPoint = 1:dataSetSize
-       
+    hour = hourFromDate(datesData{dataPoint});
     %Temperature
-    C(dataPoint) = hourlyMeans(hourFromDate(datesData{dataPoint}))*atemp(dataPoint);
-    d(dataPoint) = count(dataPoint);
+    C(dataPoint) = atemp(dataPoint) - hourlyTempMeans(hour);
+    d(dataPoint) = count(dataPoint) - hourlyMeans(hour);
     
 end
 
