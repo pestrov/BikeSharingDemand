@@ -6,7 +6,7 @@ fprintf(fid, '%s\n', 'count') ;
 
 N = numel(datesData);
 
-for i=2:N 
+for i=1:N 
     fprintf(fid, '%s,', datesData{i});
     fprintf(fid, '%i\n', count(i));
 end
