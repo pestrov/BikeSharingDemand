@@ -41,6 +41,19 @@ for i=1:testDataSetSize
             end
         end    
     end
-    answerCount(i) = floor(sum(count(kMinNeighbours))/k);
+  
+    meanRadius = mean(kMinRadius);
+    if meanRadius == 0
+        answerCount(i) = floor(sum(count(kMinNeighbours))/k);
+    else
+        meanCountSum = 0;
+        weightsSum = 0;
+        for neighboor = 1:k
+            meanCountSum = meanCountSum + count(kMinNeighbours(neighboor)) * (1 - kMinRadius(neighboor)/meanRadius)^2;
+            weightsSum = weightsSum + (1 - kMinRadius(neighboor)/meanRadius)^2;
+        end
+        answerCount(i) = meanCountSum/weightsSum;
+    end
+    
 end
 toc
