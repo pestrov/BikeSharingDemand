@@ -1,4 +1,4 @@
-k = 20;
+k = 50;
 
 dataSetSize = size(datesData);
 
@@ -7,7 +7,18 @@ for i=1:dataSetSize
     hour(i)=hourFromDate(datesData{i});
 end
 
-w = [0,0,0,0,1,1,1,1];
+month = zeros(dataSetSize);
+for i=1:dataSetSize
+    month(i)=monthFromDate(datesData{i});
+end
+
+day = zeros(dataSetSize);
+for i=1:dataSetSize
+    day(i)=weekday(datesData{i});
+end
+
+
+w = [0,0.04,0,0,1,2,1,1,0,1];
 sumLogarithmicError = 0;
 tic
 for i=1:dataSetSize
@@ -28,7 +39,9 @@ for i=1:dataSetSize
             w(5)*(weather(j)~=weather(i))+...
             w(6)*(workingday(j)~=workingday(i))+...
             w(7)*(holiday(j)~=holiday(i))+...
-            w(8)*(season(j)~=season(i));
+            w(8)*(season(j)~=season(i))+...
+            w(9)*(month(j)~=month(i))+...;
+            w(10)*(day(j)~=day(i));
         index = k;
         while (radius < kMinRadius(index))
             temprad = kMinRadius(index);
@@ -49,7 +62,7 @@ for i=1:dataSetSize
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % neighbour weight is 1
     
-    %answerCount = floor(sum(count(kMinNeighbours))/k); 
+    %answerCount = round(sum(count(kMinNeighbours))/k); 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % neighbour weight is (k+1-i)/k
 %     sum = 0;
@@ -59,7 +72,7 @@ for i=1:dataSetSize
 %         sum = sum + weight*count(kMinNeighbours(index));
 %         sumWeights = sumWeights + weight;
 %     end
-%     answerCount = sum/sumWeights;
+%     answerCount = round(sum/sumWeights);
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % neighbour weight is q^i
@@ -72,7 +85,7 @@ for i=1:dataSetSize
         sumWeights = sumWeights + weight;
         weight = weight*q;
     end
-    answerCount = sum/sumWeights;
+    answerCount = round(sum/sumWeights);
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % neighbour weight is reverse proportional to the radius
