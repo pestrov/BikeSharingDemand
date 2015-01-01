@@ -17,13 +17,15 @@ for i=1:dataSetSize
     day(i)=weekday(datesData{i});
 end
 
-numFeatures = 9;
+numFeatures = 10;
 w = zeros(numFeatures,1);
 w(1) = 1;
+w(2) = 45;
+w(3) = 45;
 
 minError = 1;
-for f=2:numFeatures
-    optCurrenWeight = 0;
+for f=4:numFeatures
+    optCurrentWeight = 0;
     for currentWeight=0:100
         w(f) = currentWeight;
         sumLogarithmicError = 0;
@@ -38,9 +40,9 @@ for f=2:numFeatures
                 end
         
                 radius = ...
-                   w(9)*(temp(j)-temp(i))^2+...
+                   w(10)*(temp(j)-temp(i))^2+...
                    w(1)*(atemp(j)-atemp(i))^2+...
-                   w(3)*(windspeed(j)-windspeed(i))^2+...
+                   w(9)*(windspeed(j)-windspeed(i))^2+...
                    w(8)*(humidity(j)-humidity(i))^2+...
                    w(4)*(weather(j)~=weather(i))+...
                    w(2)*(workingday(j)~=workingday(i))+...
