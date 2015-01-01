@@ -21,12 +21,13 @@ numFeatures = 10;
 w = zeros(numFeatures,1);
 w(1) = 1;
 w(2) = 45;
-w(3) = 45;
+w(3) = 20;
 
 minError = 1;
 for f=4:numFeatures
     optCurrentWeight = 0;
-    for currentWeight=0:100
+    for scale=0:10
+        currentWeight = scale * 10;
         w(f) = currentWeight;
         sumLogarithmicError = 0;
         for i=1:dataSetSize
@@ -117,7 +118,7 @@ for f=4:numFeatures
 
         end
         RMSLE = sqrt(sumLogarithmicError/dataSetSize(1));
-        w
+        w'
         RMSLE
         if RMSLE < minError
             optCurrenWeight = currentWeight;
