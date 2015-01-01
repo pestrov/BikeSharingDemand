@@ -22,9 +22,10 @@ w = zeros(numFeatures,1);
 w(1) = 1;
 w(2) = 45;
 w(3) = 20;
+w(4) = 20;
 
 minError = 1;
-for f=4:numFeatures
+for f=5:numFeatures
     optCurrentWeight = 0;
     for scale=0:10
         currentWeight = scale * 10;
@@ -121,7 +122,8 @@ for f=4:numFeatures
         w'
         RMSLE
         if RMSLE < minError
-            optCurrenWeight = currentWeight;
+            optCurrentWeight = currentWeight;
+            minError = RMSLE;
         end
     end
     w(f) = optCurrentWeight;
