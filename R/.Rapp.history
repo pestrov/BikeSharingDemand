@@ -1,0 +1,13 @@
+library("coin")
+libray("coin")
+library("coin")
+library("party")
+remove.packages("coin")
+library("party")
+restart()
+library("party")
+library("coin")setwd
+setwd ("~/Desktop/Skoltech/Workshop/BikeSharingDemand/Rsetwd")
+setwd ("~/Desktop/Skoltech/Workshop/BikeSharingDemand/R")
+library("party")
+library("party")
