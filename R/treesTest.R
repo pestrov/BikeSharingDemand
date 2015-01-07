@@ -67,17 +67,26 @@ formulaRegistered <- registered ~ season + holiday + workingday + weather + temp
 fitCasual.ctree <- ctree(formulaCasual, data=train_factor)
 fitRegistered.ctree <- ctree(formulaRegistered, data=train_factor)
 
+fitCasual.cforest <- cforest(formulaCasual, data=train_factor)
+fitRegistered.cforest <- cforest(formulaRegistered, data=train_factor)
+
 #examine model for variable importance
-fitCasual.ctree
-fitRegistered.ctree
+fitCasual.cforest
+fitRegistered.cforest
 
 #run model against test data set
 predictCasual.ctree <- predict(fitCasual.ctree, test_factor)
 predictRegistered.ctree <- predict(fitRegistered.ctree, test_factor)
 
-all.ctree = predictCasual.ctree+predictRegistered.ctree
+all.ctree <- predictCasual.ctree+predictRegistered.ctree
 #build a dataframe with our results
 submit.ctree <- data.frame(datetime = test$datetime, count=floor(all.ctree))
 
 #write results to .csv for submission
 write.csv(submit.ctree, file="submitionWithTreeesVersion1.csv",row.names=FALSE)
+
+#fitRegistered.cforest <- cforest(formulaRegistered, data=train_factor,controls=cforest_unbiased(ntree=50))
+#forestRegisteredTest <- treeresponse(fitRegistered.cforest, newdata=test_factor, OOB = TRUE)
+#forestCasualTestValues <-sapply(forestCasualTest, function(x){as.numeric(x[1])})
+#forestRegisteredTestValues <-sapply(forestRegisteredTest, function(x){as.numeric(x[1])})
+#allValuesAre <-forestCasualTestValues+forestRegisteredTestValues
