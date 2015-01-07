@@ -85,8 +85,13 @@ submit.ctree <- data.frame(datetime = test$datetime, count=floor(all.ctree))
 #write results to .csv for submission
 write.csv(submit.ctree, file="submitionWithTreeesVersion1.csv",row.names=FALSE)
 
-#fitRegistered.cforest <- cforest(formulaRegistered, data=train_factor,controls=cforest_unbiased(ntree=50))
+#fitRegistered.cforest <- cforest(formulaRegistered, data=train_factor,controls=cforest_unbiased(ntree=300))
 #forestRegisteredTest <- treeresponse(fitRegistered.cforest, newdata=test_factor, OOB = TRUE)
+
+#fitCasual.cforest <- cforest(formulaCasual, data=train_factor,controls=cforest_unbiased(ntree=300))
+#forestCasualTest <- treeresponse(fitCasual.cforest, newdata=test_factor, OOB = TRUE)
+
 #forestCasualTestValues <-sapply(forestCasualTest, function(x){as.numeric(x[1])})
 #forestRegisteredTestValues <-sapply(forestRegisteredTest, function(x){as.numeric(x[1])})
+
 #allValuesAre <-forestCasualTestValues+forestRegisteredTestValues
