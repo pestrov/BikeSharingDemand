@@ -95,3 +95,12 @@ write.csv(submit.ctree, file="submitionWithTreeesVersion1.csv",row.names=FALSE)
 #forestRegisteredTestValues <-sapply(forestRegisteredTest, function(x){as.numeric(x[1])})
 
 #allValuesAre <-forestCasualTestValues+forestRegisteredTestValues
+
+#randomForest
+
+#registeredForest <- randomForest(formulaRegistered, data=train_factor)
+#registeredForestPrediction <- predict(registeredForest, newdata=test_factor)
+
+#casualForest <- randomForest(formulaCasual, data=train_factor)
+#casualForestPrediction <- predict(casualForest, newdata=test_factor)
+#countPrediction <-registeredForestPrediction+casualForestPrediction
